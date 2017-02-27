@@ -30,3 +30,16 @@ virtualenv intech
 source intech/bin/activate
 
 pip install -r init/requirements.txt
+
+
+cd /usr/local
+
+mkdir cloud_sql
+
+cd cloud_sql
+
+sudo wget https://dl.google.com/cloudsql/cloud_sql_proxy.linux.amd64
+
+sudo mv cloud_sql_proxy.linux.amd64 cloud_sql_proxy
+
+sudo chmod +x cloud_sql_proxy
