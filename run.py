@@ -82,7 +82,8 @@ def manipulate():
             cursor.execute(mysql_set_job, (worker, job_etag))
             cnx.commit()
 
-            mysql_get_job = "SELECT id, image_bucket, image_path, status, worker, etag FROM jobs WHERE id = @selected_job"
+            mysql_get_job = "SELECT id, image_bucket, image_path, status, worker, etag " \
+                            "FROM jobs WHERE id = @selected_job"
             cursor.execute(mysql_get_job)
 
             job_id = None
@@ -100,11 +101,11 @@ def manipulate():
                     print('Ready to execute the job %s: %s/%s' % (job_id, job_bucket, job_image))
                 else:
                     # I don't have a job :(
-                    print('There is no job for me :( bye')
+                    print('All jobs are completed')
                 break
 
             if job_id is None:
-                print('Closing the request...')
+                print('There aren\'t jobs. Closing the communication :( bye')
                 cursor.close()
                 cnx.close()
                 response_obj = app.response_class(
