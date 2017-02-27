@@ -10,6 +10,11 @@ import time
 import mysql.connector
 import requests
 
+__author__ = "Injenia Srl"
+__credits__ = "Fausto Fusaro"
+__version__ = "0.1.0b"
+__email__ = "fausto.fusaro@injenia.it"
+
 config = {
     'user': 'intech',
     'password': 'intech2017',
@@ -102,7 +107,14 @@ def manipulate():
                 print('Closing the request...')
                 cursor.close()
                 cnx.close()
-                return '', 204
+                response_obj = app.response_class(
+                    response=json.dumps({
+                        'status': 'I\'m jobless... I have no tasks'
+                    }),
+                    status=404,
+                    mimetype='application/json'
+                )
+                return response_obj
 
             # initialize GCS client and source image
             client = storage.Client()
@@ -175,6 +187,7 @@ def manipulate():
         # ops, something is wrong
         response_obj = app.response_class(
             response=json.dumps({
+                'seconds': (time.time() - start_time),
                 'status': 'the instance is corrupted!'
             }),
             status=500,
