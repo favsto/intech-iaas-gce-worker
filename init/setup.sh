@@ -15,7 +15,7 @@
 # limitations under the License.
 #
 
-apt-get install libmysqlclient-dev
+apt-get install libmysqlclient-dev -y
 
 export PATH=$PATH:/usr/local/mysql/bin
 
