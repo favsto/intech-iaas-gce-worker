@@ -1,0 +1,6 @@
+Flask
+requests
+google.cloud
+Pillow
+MySQL-python
+mysql-connector
