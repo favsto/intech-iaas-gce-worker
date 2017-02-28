@@ -15,34 +15,33 @@
 # limitations under the License.
 #
 
+
+# base packages and MySQL libs
 apt-get install build-essential -y
 apt-get install libpq-dev python-dev libxml2-dev libxslt1-dev libldap2-dev libsasl2-dev libffi-dev liblzma-dev -y
-
 apt-get install libmysqlclient-dev -y
-
 export PATH=$PATH:/usr/local/mysql/bin
 
+
+# Python package manager
 easy_install pip
 
+
+# py virtualenv
 pip install virtualenv
 
+
+# prepare InTech environment
 cd /usr/local/intech
-
 virtualenv intech
-
 source intech/bin/activate
-
 pip install -r init/requirements.txt
 
 
+# prepare Google Cloud SQL proxy
 cd /usr/local
-
 mkdir cloud_sql
-
 cd cloud_sql
-
 sudo wget https://dl.google.com/cloudsql/cloud_sql_proxy.linux.amd64
-
 sudo mv cloud_sql_proxy.linux.amd64 cloud_sql_proxy
-
 sudo chmod +x cloud_sql_proxy
