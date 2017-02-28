@@ -15,9 +15,11 @@
 # limitations under the License.
 #
 
-apt-get install libmysqlclient-dev -y
+apt-get install build-essential -y
 
-export PATH=$PATH:/usr/local/mysql/bin
+apt-get install libmysqlclient-dev -y # ?
+
+export PATH=$PATH:/usr/local/mysql/bin # ?
 
 easy_install pip
 
