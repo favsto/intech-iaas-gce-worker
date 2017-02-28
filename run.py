@@ -163,7 +163,7 @@ def manipulate():
             out = ImageMath.eval("convert(a, 'L')", a=im3)
 
             # save new image locally
-            res_file_name = "%s_%s.png" % (job_image.rsplit('/', 1)[-1], id_generator())
+            res_file_name = "%s_%s.png" % (id_generator(), job_image.rsplit('/', 1)[-1])
             out.save(res_file_name)
 
             # upload image to my GCS bucket
