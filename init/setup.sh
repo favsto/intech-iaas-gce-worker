@@ -16,10 +16,11 @@
 #
 
 apt-get install build-essential -y
+apt-get install libpq-dev python-dev libxml2-dev libxslt1-dev libldap2-dev libsasl2-dev libffi-dev liblzma-dev -y
 
-apt-get install libmysqlclient-dev -y # ?
+apt-get install libmysqlclient-dev -y
 
-export PATH=$PATH:/usr/local/mysql/bin # ?
+export PATH=$PATH:/usr/local/mysql/bin
 
 easy_install pip
 
