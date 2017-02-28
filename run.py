@@ -21,6 +21,7 @@ from google.cloud import storage
 from google.cloud.storage import Blob
 from PIL import Image, ImageFilter, ImageEnhance, ImageMath
 import os
+import syslog
 import random
 import string
 import time
@@ -40,6 +41,12 @@ config = {
 }
 
 destination_bucket = os.environ['DESTINATION_BUCKET']
+
+# a bit of prints for debug purpose
+print("config: %s" % config)
+print("destination_bucket: %s" % destination_bucket)
+syslog.syslog("INTECH worker - config: %s" % config)
+syslog.syslog("INTECH worker - destination_bucket: %s" % destination_bucket)
 
 app = Flask(__name__)
 
@@ -87,8 +94,10 @@ def manipulate():
                 worker = req.text
             else:
                 print("Worker name unrecognized")
-        except:
-            print("Worker name unrecognized")
+                syslog.syslog("Worker name unrecognized")
+        except Exception as exc:
+            print("Worker name unrecognized. %s" % exc)
+            syslog.syslog("Worker name unrecognized. %s" % exc)
             worker = 'unrecognized'
 
         try:
@@ -116,13 +125,17 @@ def manipulate():
                     job_image = image_path
 
                     print('Ready to execute the job %s: %s/%s' % (job_id, job_bucket, job_image))
+                    syslog.syslog('INTECH worker - Ready to execute the job %s: %s/%s' %
+                                  (job_id, job_bucket, job_image))
                 else:
                     # I don't have a job :(
                     print('All jobs are completed')
+                    syslog.syslog('INTECH worker - All jobs are completed')
                 break
 
             if job_id is None:
                 print('There aren\'t jobs. Closing the communication :( bye')
+                syslog.syslog('INTECH worker - There aren\'t jobs. Closing the communication :( bye')
                 cursor.close()
                 cnx.close()
                 response_obj = app.response_class(
@@ -149,8 +162,8 @@ def manipulate():
             im3 = enhancer.enhance(2.0)
             out = ImageMath.eval("convert(a, 'L')", a=im3)
 
-            # save new image
-            res_file_name = "%s_%s.png" % (job_image, id_generator())
+            # save new image locally
+            res_file_name = "%s_%s.png" % (job_image.rsplit('/', 1)[-1], id_generator())
             out.save(res_file_name)
 
             # upload image to my GCS bucket
@@ -179,8 +192,9 @@ def manipulate():
                 status=200,
                 mimetype='application/json'
             )
-        except:
-            print("Runtime error")
+        except Exception as exc:
+            print("Runtime error: %s" % exc)
+            syslog.syslog("INTECH worker - Runtime error: %s" % exc)
             # a ugly response
             response_obj = app.response_class(
                 response=json.dumps({
