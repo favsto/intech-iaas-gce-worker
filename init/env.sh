@@ -9,7 +9,7 @@ echo SQL_CONNECTION_NAME=$(curl -s "http://metadata/computeMetadata/v1/instance/
 
 
 # update env variables
-export DESTINATION_BUCKET
-export SQL_USERNAME
-export SQL_PASSWORD
-export SQL_CONNECTION_NAM
+echo export DESTINATION_BUCKET >> config
+echo export SQL_USERNAME >> config
+echo export SQL_PASSWORD >> config
+echo export SQL_CONNECTION_NAME >> config
