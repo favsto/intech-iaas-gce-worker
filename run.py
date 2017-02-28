@@ -1,3 +1,20 @@
+#!/usr/bin/env python
+#
+# Copyright 2017 Fausto Fusaro - Injenia Srl
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#
+
 from flask import Flask
 from flask import json
 from google.cloud import storage
@@ -16,13 +33,13 @@ __version__ = "0.1.0b"
 __email__ = "fausto.fusaro@injenia.it"
 
 config = {
-    'user': 'intech',
-    'password': 'intech2017',
+    'user': os.environ['SQL_USERNAME'],
+    'password': os.environ['SQL_PASSWORD'],
     'host': '127.0.0.1',
     'database': 'intech',
 }
 
-destination_bucket = 'injenia-ricerca'
+destination_bucket = os.environ['DESTINATION_BUCKET']
 
 app = Flask(__name__)
 
