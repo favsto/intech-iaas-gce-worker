@@ -168,7 +168,7 @@ def manipulate():
 
             # upload image to my GCS bucket
             dest_bucket = client.get_bucket(destination_bucket)
-            blob = Blob("restults/%s" % res_file_name, dest_bucket)
+            blob = Blob("results/%s" % res_file_name, dest_bucket)
             with open(res_file_name, 'rb') as my_file:
                 blob.upload_from_file(my_file)
 
